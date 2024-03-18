@@ -1,41 +1,53 @@
+<!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      /* 텍스트 스타일 설정 */
+      #target {
+        color: black; /* 텍스트 색상을 검정색으로 설정 */
+        font-size: 24px; /* 원하는 글꼴 크기로 설정 */
+      }
+    </style>
+  </head>
   <body>
+    <!-- 출력될 텍스트가 들어갈 요소 -->
+    <div id="target"></div>
+    
     <script>
-let target = document.querySelector("#iu");
+      function randomString(){
+        let stringArr = ["coogie", "GIRIBOY", "pH-1"];
+        let selectString = stringArr[Math.floor(Math.random()*stringArr.length)];
+        let selectStringArr = selectString.split("");
 
-function randomString(){
- let stringArr = ["IU","Keshi","Conan gary"];
- let selectString = stringArr[Math.floor(Math.random()*stringArr.length)]
- let selectStringArr = selectString.split("");
+        return selectStringArr;
+      }
 
-return selectStringArr;
-}
+      // 타이핑 리셋
+      function resetTyping(){
+        target.textContent = "";
+        dynamic(randomString());
+      }
 
-//타이핑 리셋
-function resetTyping(){
-  target.textContent = "";
-  dynamic(randomString());
-}
+      // 한 글자씩 출력
+      function dynamic(randomArr){
+        if(randomArr.length > 0){
+          target.textContent += randomArr.shift();
+          setTimeout(function(){
+            dynamic(randomArr);
+          },80);
+        }else{
+          setTimeout(resetTyping, 2000);
+        }
+      }
 
-//한글자씩 출력
-function dynamic(randomArr){
- 
-  if(randomArr.length > 0){
-    target.textContent += randomArr.shift();
-    setTimeout(function(){
-      dynamic(randomArr);
-    },80);
-  }else{
-    setTimeout(resetTyping, 2000);
-  }
-}
-dynamic(randomString());
+      // 글자 깜박임 효과
+      function blink(){
+        target.classList.toggle("active");
+      }
+      setInterval(blink, 500);
 
-//커서깜박임효과
-function blink(){
-  target.classList.toggle("active");
-}
-setInterval(blink, 500);
-</script>
+      // 초기 실행
+      dynamic(randomString());
+    </script>
   </body>
 </html>
